@@ -1,0 +1,139 @@
+import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
+void main() {
+  runApp(AnimalCareApp());
+}
+
+class AnimalCareApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Animal Care App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: LoginPage(),
+    );
+  }
+}
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'AnimalCare',
+          style: TextStyle(
+            color: Colors.blue,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.pink[50], // Baby pink background color
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 250,
+                child: CachedNetworkImage(
+                  imageUrl: 'https://tse2.mm.bing.net/th?id=OIP.xMjk-f7661WMqhtFHiQuZwHaEK&pid=Api&P=0&h=220', // Replace with actual URL
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Log in',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                ),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Implement your login logic here
+                  String email = _emailController.text;
+                  String password = _passwordController.text;
+                  // For simplicity, let's just print the credentials
+                  print('Email: $email');
+                  print('Password: $password');
+                },
+                child: Text('Log in'),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      // Implement sign up with Google logic
+                      print('Signing up with Google');
+                    },
+                    icon: CachedNetworkImage(
+                      imageUrl: 'https://www.example.com/google_logo.png', // Replace with actual URL
+                      width: 24.0,
+                      height: 24.0,
+                      placeholder: (context, url) => CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                    label: Text('Sign up with Google'),
+                  ),
+                  SizedBox(width: 20),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      // Implement sign up with Apple logic
+                      print('Signing up with Apple');
+                    },
+                    icon: Icon(Icons.apple),
+                    label: Text('Sign up with Apple'),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Text(
+                "Haven't signed up yet? Sign up now!",
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.blue,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
